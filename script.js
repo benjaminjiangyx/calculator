@@ -121,6 +121,34 @@ function handleClear() {
   updateDisplay("0");
 }
 
+function handleBackspace() {
+  console.log("Backspace clicked");
+  if (justCalculated) {
+    // If just calculated, clear everything
+    handleClear();
+    return;
+  }
+  if (operator === null) {
+    // We are editing num1
+    if (num1 !== null) {
+      num1 = num1.slice(0, -1);
+      if (num1 === "") {
+        num1 = null;
+      }
+      updateDisplay(num1);
+    }
+  } else {
+    // We are editing num2
+    if (num2 !== null) {
+      num2 = num2.slice(0, -1);
+      if (num2 === "") {
+        num2 = null;
+      }
+      updateDisplay(num2);
+    }
+  }
+}
+
 function updateDisplay(value) {
   const display = document.getElementById("display");
   display.value = value;
@@ -135,5 +163,8 @@ addEventListener("click", function (event) {
     handleEquals();
   } else if (event.target.matches("#clear")) {
     handleClear();
+  } else if (event.target.matches("#backspace")) {
+    console.log("Backspace clicked");
+    handleBackspace();
   }
 });
